@@ -80,6 +80,12 @@ sip <ip>
 ```
 ![sip2](imgs/sip-example2.jpg)
 
+### dark
+```shell
+sdark
+```
+![dark](imgs/sdark-example.jpg)
+
 ## ssh
 ssh工作流
 **ssh工作流中的关键字前缀为 ssh**
@@ -114,4 +120,3 @@ sshkey
 sshconfig
 ```
 ![sshconfig](imgs/sshconfig-example.jpg)
-
