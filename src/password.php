@@ -1,18 +1,32 @@
 <?php
-function randomChar()
-{
-    static $strings = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    return substr($strings, random_int(0, strlen($strings) - 1), 1);
-}
+error_reporting(E_ERROR);
 
-function randomPassword($length = 16)
+class StringRandomer
 {
-    $result = '';
-    for ($idx = 0; $idx < $length; $idx++) {
-        $result .= randomChar();
+    private string $chars;
+    public static $complex = 0;
+    public function __construct($specificChars)
+    {
+        $this->chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        if ($specificChars != 'easy') {
+            $this->chars .= '~!@#$%^&*()_+{}|:<>?-=';
+
+            if ($specificChars) {
+                // 其他字符串则排除其中字符
+                $this->chars = str_replace($specificChars, '', $this->chars);
+            }
+        }
     }
 
-    return $result;
+    public function random($length = 16)
+    {
+        $result = '';
+        for ($idx = 0; $idx < $length; $idx++) {
+            $result .= substr($this->chars, random_int(0, strlen($this->chars) - 1), 1);
+        }
+
+        return $result;
+    }
 }
 
 $result = [
@@ -40,14 +54,21 @@ function exitWithResult()
     exit(json_encode($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
 }
 
-$length = $argv[1] ?? 16;
+$arg = $argv[1] ?? '16';
+[$length, $specificChars] = explode(' ', $arg);
+if (!is_int($length)) {
+    $specificChars = $length;
+    $length = 16;
+}
+
 if ($length > 256) {
     addItem('error', '错误:', '长度不能超过256');
     exitWithResult();
 }
 
+$randomer = new StringRandomer($specificChars ?? "");
 for ($num = 0; $num < 10; $num++) {
-    addItem('password', randomPassword($length), '随机密码');
+    addItem('password', $randomer->random($length), '随机密码');
 }
 
 exitWithResult();
