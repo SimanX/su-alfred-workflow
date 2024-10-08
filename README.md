@@ -11,6 +11,9 @@ php >= 7.4
 brew install php
 ```
 
+## 安装
+直接将 sutil.alfredworkflow 导入到 Alfred 中，并设置环境变量 ROOT 为 sutil 的本地项目根路径即可(为了使用 composer 来进行自动加载)
+
 ## sutil(small and super util)
 一些便捷工作流(持续更新中，如果有好的想法也可以联系以沟通交流)
 
