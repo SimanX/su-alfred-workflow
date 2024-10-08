@@ -1,16 +1,16 @@
 {
-    "name": "xushao/su-alfred-workflow",
-    "description": "alfred-workflow, small but super.",
-    "type": "project",
-    "require": {
-        "joetannenbaum/alfred-workflow": "dev-master",
-      "ext-json": "*"
-    },
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "facade\\": "facade"
-        }
-    },
-    "minimum-stability": "dev"
+  "name": "xushao/su-alfred-workflow",
+  "description": "alfred-workflow, small but super.",
+  "type": "project",
+  "require": {
+    "joetannenbaum/alfred-workflow": "dev-master",
+    "ext-json": "*"
+  },
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/app"
+    }
+  },
+  "minimum-stability": "dev"
 }

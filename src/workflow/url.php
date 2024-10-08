@@ -5,13 +5,13 @@ require $_SERVER['ROOT'] . '/vendor/autoload.php';
 use Alfred\Workflows\Workflow;
 
 
-$url = \facade\Facade::argument();
+$url = \App\Facade\Facade::argument();
 $urlInfo = parse_url($url);
 if ($urlInfo === false) {
-	\facade\Facade::error('无效的url', 'error');
+	\App\Facade\Facade::error('无效的url', 'error');
 }
 
-$workflow = \facade\Facade::getInstance();
+$workflow = \App\Facade\Facade::getInstance();
 $url = urldecode($url);
 $workflow->item()
 	->title($url)

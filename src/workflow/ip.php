@@ -27,8 +27,8 @@ function is_private_ip($ip)
 	return false;
 }
 
-$queryIp = \facade\Facade::argument() ?? '';
-$ipService = \facade\Facade::env('ipservice');
+$queryIp = \App\Facade\Facade::argument() ?? '';
+$ipService = \App\Facade\Facade::env('ipservice');
 if (empty($queryIp)) {
 	// 没有输入ip，查询本机ip信息
 	exec('ifconfig', $output);
@@ -59,7 +59,7 @@ if (empty($queryIp)) {
 
 	foreach ($interfaces as $name => $interface) {
 		if (isset($interface['ipv4'])) {
-			\facade\Facade::addItem($interface['ipv4'], sprintf('内网 ipv4(%s)', $name));
+			\App\Facade\Facade::addItem($interface['ipv4'], sprintf('内网 ipv4(%s)', $name));
 		}
 	}
 
@@ -68,13 +68,13 @@ if (empty($queryIp)) {
 	if (!empty($externalIpv4Result)) {
 		$externalIpv4Json = json_decode($externalIpv4Result, true);
 		if (isset($externalIpv4Json['query'])) {
-			\facade\Facade::addItem($externalIpv4Json['query'], '外网ipv4');
+			\App\Facade\Facade::addItem($externalIpv4Json['query'], '外网ipv4');
 		}
 	}
 
 	foreach ($interfaces as $name => $interface) {
 		if (isset($interface['ipv6'])) {
-			\facade\Facade::addItem($interface['ipv6'], sprintf('内网 ipv6(%s)', $name));
+			\App\Facade\Facade::addItem($interface['ipv6'], sprintf('内网 ipv6(%s)', $name));
 		}
 	}
 
@@ -82,33 +82,33 @@ if (empty($queryIp)) {
 	if (!empty($externalIpv6Result)) {
 		$externalIpv6Json = json_decode($externalIpv6Result, true);
 		if ($externalIpv6Json && isset($externalIpv6Json['query'])) {
-			\facade\Facade::addItem($externalIpv6Json['query'], '外网ipv6');
+			\App\Facade\Facade::addItem($externalIpv6Json['query'], '外网ipv6');
 		}
 	}
-	\facade\Facade::exit();
+	\App\Facade\Facade::exit();
 }
 
 if (in_array($queryIp, ['127.0.0.1', 'localhost'])) {
-	\facade\Facade::exit('queryresult', '本机ip');
+	\App\Facade\Facade::exit('queryresult', '本机ip');
 }
 
 if (is_private_ip($queryIp)) {
-	\facade\Facade::exit('queryresult', '局域网');
+	\App\Facade\Facade::exit('queryresult', '局域网');
 }
 
 $apiUrl = 'https://qifu.baidu.com/ip/geo/v1/district?ip=';
 $ipQueryResult = file_get_contents($apiUrl . $queryIp);
 if (empty($ipQueryResult)) {
-	\facade\Facade::error('查询ip归属地失败，请检查网络和ip拼写', '错误');
+	\App\Facade\Facade::error('查询ip归属地失败，请检查网络和ip拼写', '错误');
 }
 
 $ipQueryJson = json_decode($ipQueryResult, true);
 if (strtoupper($ipQueryJson['code']) != 'SUCCESS') {
-	\facade\Facade::addItem('查询失败: ' . $ipQueryJson['msg'], '错误');
-	\facade\Facade::exit(json_encode($ipQueryJson, JSON_UNESCAPED_UNICODE), '详细结果json');
+	\App\Facade\Facade::addItem('查询失败: ' . $ipQueryJson['msg'], '错误');
+	\App\Facade\Facade::exit(json_encode($ipQueryJson, JSON_UNESCAPED_UNICODE), '详细结果json');
 }
 
 $data = $ipQueryJson['data'];
-\facade\Facade::addItem(sprintf('国家: %s, 省份: %s, 城市: %s, 区: %s',
+\App\Facade\Facade::addItem(sprintf('国家: %s, 省份: %s, 城市: %s, 区: %s',
 	$data['country'], $data['prov'], $data['city'], $data['district'] ?? 'null'), '查询结果');
-\facade\Facade::exit(json_encode($ipQueryJson, JSON_UNESCAPED_UNICODE), '详细结果json');
+\App\Facade\Facade::exit(json_encode($ipQueryJson, JSON_UNESCAPED_UNICODE), '详细结果json');

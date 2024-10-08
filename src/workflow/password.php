@@ -33,7 +33,7 @@ class StringRandomer
 	}
 }
 
-$argv = \facade\Facade::argument() ?? '16';
+$argv = \App\Facade\Facade::argument() ?? '16';
 [$length, $specificChars] = explode(' ', $argv);
 if (!filter_var($length, FILTER_VALIDATE_INT)) {
 	$specificChars = $length;
@@ -41,13 +41,13 @@ if (!filter_var($length, FILTER_VALIDATE_INT)) {
 }
 
 if ($length > 256) {
-	\facade\Facade::error('长度不能超过256', '错误');
+	\App\Facade\Facade::error('长度不能超过256', '错误');
 }
 
 $randomer = new StringRandomer($specificChars ?? "");
 for ($num = 0; $num < 10; $num++) {
 	$pwd = $randomer->random($length);
-	\facade\Facade::addItem($pwd, '随机密码');
+	\App\Facade\Facade::addItem($pwd, '随机密码');
 }
 
-\facade\Facade::output();
+\App\Facade\Facade::output();

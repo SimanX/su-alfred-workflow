@@ -2,6 +2,6 @@
 
 require $_SERVER['ROOT'] . '/vendor/autoload.php';
 
-$input = \facade\Facade::argument();
+$input = \App\Facade\Facade::argument();
 $result = md5($input);
-\facade\Facade::exit($result, 'md5');
+\App\Facade\Facade::exit($result, 'md5');

@@ -1,10 +1,6 @@
 <?php
-/**
- * @author xushao
- * @description
- */
 
-namespace facade;
+namespace App\Facade;
 
 use Alfred\Workflows\Workflow;
 
@@ -69,7 +65,7 @@ class Facade
 	{
 		$arg ??= $title;
 		$instance = static::getInstance();
-		$instance->item()
+		return $instance->item()
 			->title($title)
 			->subtitle($subtitle)
 			->arg($arg);
