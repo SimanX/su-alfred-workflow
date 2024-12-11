@@ -61,7 +61,7 @@ class Facade
 		static::error($title, $subtitle, $arg);
 	}
 
-	public static function addItem(string $title, string $subtitle, string $arg = null)
+	public static function addItem(string $title, string $subtitle = '', string $arg = null)
 	{
 		$arg ??= $title;
 		$instance = static::getInstance();

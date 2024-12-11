@@ -4,7 +4,9 @@
   "type": "project",
   "require": {
     "joetannenbaum/alfred-workflow": "dev-master",
-    "ext-json": "*"
+    "ext-json": "*",
+    "ext-gd": "*",
+    "ext-mbstring": "*"
   },
   "license": "MIT",
   "autoload": {
